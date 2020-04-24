@@ -1,5 +1,5 @@
 {
-  "name": "@bingosoft/vue-treeselect",
+  "name": "@bingosoftnn/vue-treeselect",
   "version": "0.0.1",
   "description": "A multi-select component with nested options support for Vue.js (disable immediate search)",
   "license": "MIT",
