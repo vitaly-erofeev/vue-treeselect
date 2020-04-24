@@ -17,7 +17,7 @@
       <template slot="before-list">
         <div v-show="showSearchTip" class="vue-treeselect__tip vue-treeselect__seacrh-promt-tip">
           <div class="vue-treeselect__icon-container">
-            <span class="vue-treeselect__icon-warning"></span>
+            <span class="vue-treeselect__icon-warning" />
           </div>
           <span class="vue-treeselect__tip-text vue-treeselect__seacrh-promt-tip-text">
             Press enter to search
@@ -62,7 +62,7 @@
         this.search = value
         this.searchLoaded = false
       },
-      loadOptions({ action, searchQuery, callback }) {
+      loadOptions({ action, callback }) {
         if (action === ASYNC_SEARCH) {
           this.searchLoaded = false
           this.searchLoading = true
