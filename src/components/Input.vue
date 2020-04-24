@@ -136,6 +136,14 @@
         }
         case KEY_CODES.ENTER: {
           evt.preventDefault()
+          if (instance.disableImmediateSearch) {
+            if (instance.async) {
+              instance.handleRemoteSearch()
+            } else {
+              instance.handleLocalSearch()
+            }
+            break
+          }
           if (instance.menu.current === null) return
           const current = instance.getNode(instance.menu.current)
           if (current.isBranch && instance.disableBranchNodes) return

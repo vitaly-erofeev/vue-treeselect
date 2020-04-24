@@ -135,6 +135,9 @@
           : entry.isLoaded && entry.options.length === 0
 
         if (shouldShowSearchPromptTip) {
+          if (instance.disableImmediateSearch) {
+            return this.renderOptionList()
+          }
           return this.renderSearchPromptTip()
         } else if (entry.isLoading) {
           return this.renderLoadingOptionsTip()

@@ -71,6 +71,13 @@ export default {
 
   props: {
     /**
+     * Disable the immediate search and search only by enter?
+     */
+    disableImmediateSearch: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      * Whether to allow resetting value even if there are disabled selected nodes.
      */
     allowClearingDisabled: {
@@ -851,7 +858,7 @@ export default {
 
     options: {
       handler() {
-        if (this.async) return
+        if (this.async && !this.disableImmediateSearch) return
         // Re-initialize options when the `options` prop has changed.
         this.initialize()
         this.rootOptionsStates.isLoaded = Array.isArray(this.options)
@@ -860,11 +867,13 @@ export default {
       immediate: true,
     },
 
-    'trigger.searchQuery'() {
-      if (this.async) {
-        this.handleRemoteSearch()
-      } else {
-        this.handleLocalSearch()
+    'trigger.searchQuery'(value) {
+      if (!this.disableImmediateSearch || !value) {
+        if (this.async) {
+          this.handleRemoteSearch()
+        } else {
+          this.handleLocalSearch()
+        }
       }
 
       this.$emit('search-change', this.trigger.searchQuery, this.getInstanceId())
@@ -880,7 +889,7 @@ export default {
   methods: {
     verifyProps() {
       warning(
-        () => this.async ? this.searchable : true,
+        () => (this.async && !this.disableImmediateSearch) ? this.searchable : true,
         () => 'For async search mode, the value of "searchable" prop must be true.',
       )
 
@@ -920,7 +929,7 @@ export default {
     },
 
     initialize() {
-      const options = this.async
+      const options = (this.async && !this.disableImmediateSearch)
         ? this.getRemoteSearchEntry().options
         : this.options
 
@@ -1939,7 +1948,7 @@ export default {
     if (this.autoFocus) this.focusInput()
     if (!this.options && !this.async && this.autoLoadRootOptions) this.loadRootOptions()
     if (this.alwaysOpen) this.openMenu()
-    if (this.async && this.defaultOptions) this.handleRemoteSearch()
+    if ((this.async && !this.disableImmediateSearch) && this.defaultOptions) this.handleRemoteSearch()
   },
 
   destroyed() {
