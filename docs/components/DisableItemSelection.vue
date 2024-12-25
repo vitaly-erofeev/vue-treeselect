@@ -28,6 +28,7 @@
         id: 'disabled-folder',
         label: 'Disabled Folder',
         isDisabled: true,
+        canSelectChildrenEvenIfDisabled: true,
         children: [ {
           id: 'item-2',
           label: 'Item',
